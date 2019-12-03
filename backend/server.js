@@ -45,10 +45,19 @@ router.post('/updateData', (req, res) => {
   });
 });
 
-// Delete method
+//Delete method
 router.delete('/deleteData', (req, res) => {
   const { id } = req.body;
   Data.findByIdAndRemove(id, (err) => {
+    if (err) return res.send(err);
+    return res.json({ success: true });
+  });
+});
+
+// Clear All method
+router.delete('/user', (req, res) => {
+  const { id } = req.body;
+  db.dropDatabase(id, (err) => {
     if (err) return res.send(err);
     return res.json({ success: true });
   });

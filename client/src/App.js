@@ -71,6 +71,23 @@ class App extends Component {
     });
   };
 
+  //Clear Method
+  dropDB = (idToDelete) => {
+    parseInt(idToDelete);
+    let objIdToDelete = null;
+    this.state.data.forEach((dat) => {
+      if (dat.id == idToDelete) {
+        objIdToDelete = dat._id;
+      }
+    });
+
+    axios.delete('http://localhost:3001/api/user', {
+      data: {
+        id: objIdToDelete,
+      },
+    });
+  };
+
   // Update method
   updateDB = (idToUpdate, updateToApply) => {
     let objIdToUpdate = null;
@@ -99,7 +116,8 @@ class App extends Component {
               : data.map((dat) => (
                 <li style={{ padding: '10px' }} key={data.message}>
                   <span> id: </span> {dat.id} <br />
-                  <span> data: </span>
+                  <span> data: </span> <br />
+                  <span> number: </span>
                   {dat.message}
                 </li>
               ))}
@@ -112,7 +130,7 @@ class App extends Component {
             />
             <button className='Button' onClick={() => this.putDataToDB(this.state.message)}>
               ADD
-          </button>
+            </button>
           </div>
           <div className='TextBoxContainer'>
             <textarea className='TextBox'
@@ -122,7 +140,7 @@ class App extends Component {
             />
             <button className='Button' onClick={() => this.deleteFromDB(this.state.idToDelete)}>
               DELETE
-          </button>
+            </button>
           </div>
           <div className='TextBoxContainer'>
             <textarea className='TextBox'
@@ -141,8 +159,11 @@ class App extends Component {
               }
             >
               UPDATE
-          </button>
+            </button>
           </div>
+          <button className='Button' onClick={() => this.dropDB(this.state.idToDelete)}>
+            CLEAR ALL
+          </button>
         </div>
       </div>
     );
