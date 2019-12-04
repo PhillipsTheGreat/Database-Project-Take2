@@ -54,7 +54,7 @@ router.delete('/deleteData', (req, res) => {
   });
 });
 
-// Clear All method
+// Drops the database. Don't blame me, it works.
 router.delete('/user', (req, res) => {
   const { id } = req.body;
   db.dropDatabase(id, (err) => {
